@@ -1,74 +1,3 @@
-#from Round_File import Round
-
-
-
-#E4 = Round([6,6])
-#E4.print_board()
-
-def menu(): 
-    """ 
-    Used to display the menu: 
-    What would you like to do? 
-    1 - Play the game 
-    2 - Watch computer play 
-    3 - See statistics from 1000 moves 
-    4 - Exit 
-    :return: (nothing) 
-    """
-    print("What would you like to do? (type a number 1-4)")
-    print("1 - Play the game")
-    print("2 - Watch computer play ")
-    print("3 - See statistics from 1000 moves ")
-    print("4 - Exit")
-    
-     
-def update_statistics():  
-    """
-    Uses the dictionary of all rounds to make a list of the rounds the computer plays in the “make 
-    1000 random moves” choice. 
-    :return: nothing 
-    """
-    
- 
- 
-def print_statistics(): 
-    """ 
-    Prints the 1000 games played, with the most amount of moves at top. 
-    :return: nothing 
-    """
-    
-
-def get_int_input(prompt_string): 
-    """ 
-    Used to get an int from the user, asks again if input is not convertible to int 
-    :param prompt_string: the string explaining what to input 
-    :return: the int that was asked for 
-    """ 
-    while True:
-        try:
-            num = int(input(prompt_string))
-            return num
-            
-        except ValueError:
-            print("Enter an integer")    
-        
-    
-def start_player_round():
-    """
-    Creates object of the Round class. First it gets starting postion from user 
-    then it creates the round
-    """
-
-    
-    
-     
- 
-def execute(choice): 
-    """ 
-    Used to execute the option that the user chose 
-    :param choice: an int corresponding the the chosen option 
-    :return: (nothing) 
-    """ 
 class Round:
     """
     Attributes:
@@ -105,7 +34,7 @@ class Round:
                             [-1,   2,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#8
                             [-1,   1,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#9
                                 
-                            [-1,  -1, 'A','B','C','D','E','F','G','H',  -1,-1],#10
+                            [-1,  -1, 'A','B','C','D','E','F','G','H'   -1,-1],#10
 
                             [-1,  -1, -1, -1, -1, -1, -1, -1, -1, -1,   -1,-1],#11
                             # 0    1   2   3   4   5   6   7   8   9    10 11
@@ -139,36 +68,27 @@ class Round:
         previous_index = 0
         allowed_index = 2
         print("-"*40)
+        print("|   "  + ("-"*32) + "   |")
         for id_row, row in enumerate(self.board): #Cycles through each row
-            if id_row >= 2 and id_row <= 10:
-                print("|   "  + ("-"*32) + "   |")
-                
-                if id_row != 10:
-                    print("|" + str(row[1]), end=" ")
-                else:
-                    print("|  ", end="")
+            if row[1] != -1:
+                print("|" + str(row[1]), end=" ")
                 
                 for col in range(2,10): #Cycles through each square in one row
-                    print(" | ", end="")
+                    print(" | ")
 
                     if [id_row, col] == self.current_position:
-                        print("X", end="") #Print the knight                        
+                        print("X") #Print the knight                        
 
                     elif [id_row, col] in self.previous_positions:
-                        print(self.previous_positions[previous_index], end="")
+                        print(self.previous_positions[previous_index])
                         previous_index += 1
 
                     elif [id_row, col] in self.allowed_positions:
-                        print(str((self.board[10][allowed_index]())).lower(), end="")
+                        print(str((self.board[10][allowed_index]())).lower())
                         allowed_index += 1  
-                    
-                    elif id_row == 10:
-                        print(row[col], end="")
                         
                     else:
-                        print(" ", end="")
-                print("|")
-        print("-"*40)
+                        print(" ")
                     
                     
                                                             
@@ -207,5 +127,3 @@ class Round:
         self.previous_positions.append(new_position)
 
 
-E4 = Round([6,6])
-E4.print_board()
