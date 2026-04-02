@@ -72,8 +72,8 @@ def execute(choice):
 
 rounds_dict = {}
 
-starting_pos = "E4"
-rounds_dict[starting_pos]= Round(starting_pos)
+#starting_pos = "E4"
+#rounds_dict[starting_pos]= Round(starting_pos)
 starting_pos = "D2"
 rounds_dict[starting_pos]= Round(starting_pos)
 
@@ -84,4 +84,7 @@ rounds_dict["D2"].make_move("F1")
 rounds_dict["D2"].print_board()
 
 rounds_dict["D2"].make_move("G3")
+rounds_dict["D2"].print_board()
+
+rounds_dict["D2"].make_move("H8")
 rounds_dict["D2"].print_board()

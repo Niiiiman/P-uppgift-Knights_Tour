@@ -1,4 +1,3 @@
-
 class Round:
     """
     Attributes:
@@ -37,7 +36,10 @@ class Round:
         
         self.current_position = self.translate_move_for_matrix(start_position)
         self.allowed_positions = []
-        self.previous_positions = [self.current_position]
+        self.previous_positions = {}
+        
+        self.previous_dict_key = 0
+        self.previous_positions[self.previous_dict_key] = self.current_position
         
         """
         OBS
@@ -64,9 +66,11 @@ class Round:
         """
         Prints the board row by row
         """
-        previous_index = 0
-        allowed_index = 2
-        print("Board:")
+        
+        allowed_list_index = 2
+        print("Come on champ! Next move:")
+        print("PREV: " + str(self.previous_positions))
+        print("CURR: " + str(self.current_position))
         print("-"*40)
         for id_row, row in enumerate(self.board): #Cycles through each row
 
@@ -84,13 +88,13 @@ class Round:
                     if [id_row, col] == self.current_position:
                         print("X", end="") #Print the knight                        
 
-                    elif [id_row, col] in self.previous_positions:
-                        print(previous_index, end="") #Prints the history of where the knight has been
-                        previous_index += 1                                    #This will look ugly after 9.
+                    elif [id_row, col] in self.previous_positions.values():
+                        print(self.previous_dict_key, end="") #Prints the history of where the knight has been
+                                                               #This will look ugly after 9.
 
                     elif [id_row, col] in self.allowed_positions:
-                        print(str((self.board[10][allowed_index]())).lower(), end="") #str.board[10] points at the list ['A', 'B', ...]
-                        allowed_index += 1                                            #And allowed positions will be marked by 'a','b', ...
+                        print(str((self.board[10][allowed_list_index]())).lower(), end="") #str.board[10] points at the list ['A', 'B', ...]
+                        allowed_list_index += 1                                            #And allowed positions will be marked by 'a','b', ...
                         #allowed_index starts at 2 because that points at A in row 10 of the matrix.
                     elif id_row == 10:
                         print(row[col], end="")
@@ -135,4 +139,5 @@ class Round:
         Moves the knight to a new position
         """
         self.current_position = self.translate_move_for_matrix(new_position)
-        self.previous_positions.append(self.current_position)
+        self.previous_positions[self.previous_dict_key] = self.current_position
+        self.previous_dict_key += 1
