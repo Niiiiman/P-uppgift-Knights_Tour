@@ -16,6 +16,28 @@ def menu():
     print("3 - See statistics from 1000 moves ")
     print("4 - Exit")
     
+    
+def execute(choice): 
+    """ 
+    Used to execute the option that the user chose 
+    :param choice: an int corresponding the the chosen option 
+    :return: (nothing) 
+    """ 
+    #match choice:
+    #    case 1:
+    #        #Get starting pos
+    #        #start player round
+    #    case 2:
+    #        #start rounds with random starting pos, make random moves 1000 times
+    #    case 3:    
+    #        #update statistics
+    #        #print statistics
+    #    case 4:
+    #        #Running = False
+    #        
+    #    case default:
+    #        #error
+            
      
 def update_statistics():  
     """
@@ -52,7 +74,17 @@ def get_starting_position():
     """
     Gets starting position as an input from user, with error handling
     :return: string of starting postion ("E4", )
+    
     """
+    while True:
+        try:
+            starting_pos = get_int_input("Enter a starting postion coordinate (E4, A1, ...)")
+            #if starting_pos[0]
+            return 
+            
+        except:
+            print("unexpected error")
+        
 def start_player_round():
     """
     Creates object of the Round class. 
@@ -62,12 +94,6 @@ def start_player_round():
     
      
  
-def execute(choice): 
-    """ 
-    Used to execute the option that the user chose 
-    :param choice: an int corresponding the the chosen option 
-    :return: (nothing) 
-    """ 
 
 
 rounds_dict = {}
