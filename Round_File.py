@@ -1,3 +1,4 @@
+
 class Round:
     """
     Attributes:
@@ -15,12 +16,6 @@ class Round:
         """
         Creates a new Round with current_position as starting position
         """
-        self.current_position = start_position
-        self.allowed_positions = []
-        self.previous_positions = [start_position]
-        
-        self.current_row = 0
-        self.current_col = 0
         self.board = [
                             [-1,  -1, -1, -1, -1, -1, -1, -1  -1, -1,   -1,-1],#0
                             [-1,  -1, -1, -1, -1, -1, -1, -1  -1, -1,   -1,-1],#1
@@ -34,11 +29,15 @@ class Round:
                             [-1,   2,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#8
                             [-1,   1,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#9
                                 
-                            [-1,  -1, 'A','B','C','D','E','F','G','H'   -1,-1],#10
+                            [-1,  -1, 'A','B','C','D','E','F','G','H',  -1,-1],#10
 
                             [-1,  -1, -1, -1, -1, -1, -1, -1, -1, -1,   -1,-1],#11
                             # 0    1   2   3   4   5   6   7   8   9    10 11
                             ]
+        
+        self.current_position = self.translate_move_for_matrix(start_position)
+        self.allowed_positions = []
+        self.previous_positions = [self.current_position]
         
         """
         OBS
@@ -59,7 +58,7 @@ class Round:
         
 
 #row[col] blir värdet på den positionen, 0 eller X eller b, eller 2
-#
+#id_row är nummer i matrisen (0-11)
 
     def print_board(self):
         """
@@ -67,28 +66,39 @@ class Round:
         """
         previous_index = 0
         allowed_index = 2
+        print("Board:")
         print("-"*40)
-        print("|   "  + ("-"*32) + "   |")
         for id_row, row in enumerate(self.board): #Cycles through each row
-            if row[1] != -1:
-                print("|" + str(row[1]), end=" ")
+
+            if id_row >= 2 and id_row <= 10: #We don't want to print the outlines of the matrix
+                print("|   "  + ("-"*33) + "  |")
+                
+                if id_row != 10:
+                    print("|" + str(row[1]), end=" ") #row 10 is the ['A', 'B', ...] list, we don't want to print the row[1] here (-1).
+                else:
+                    print("|  ", end="")
                 
                 for col in range(2,10): #Cycles through each square in one row
-                    print(" | ")
+                    print(" | ", end="")
 
                     if [id_row, col] == self.current_position:
-                        print("X") #Print the knight                        
+                        print("X", end="") #Print the knight                        
 
                     elif [id_row, col] in self.previous_positions:
-                        print(self.previous_positions[previous_index])
-                        previous_index += 1
+                        print(previous_index, end="") #Prints the history of where the knight has been
+                        previous_index += 1                                    #This will look ugly after 9.
 
                     elif [id_row, col] in self.allowed_positions:
-                        print(str((self.board[10][allowed_index]())).lower())
-                        allowed_index += 1  
+                        print(str((self.board[10][allowed_index]())).lower(), end="") #str.board[10] points at the list ['A', 'B', ...]
+                        allowed_index += 1                                            #And allowed positions will be marked by 'a','b', ...
+                        #allowed_index starts at 2 because that points at A in row 10 of the matrix.
+                    elif id_row == 10:
+                        print(row[col], end="")
                         
                     else:
-                        print(" ")
+                        print(" ", end="")
+                print(" |  |")
+        print("-"*40)
                     
                     
                                                             
@@ -101,14 +111,15 @@ class Round:
         move = input("Choose your move: ")
         return move
     
-    def update_curent_position(self, move):
+    def translate_move_for_matrix(self, move):
         """
-        Translates a move (A1 or G4...) to row index and column index and 
+        Translates a move (A1 or G4...) to a list of row index and column index [9, 2] or [6, 8]
+        :return: a list of row and col of the matrix, named "position"
         """
         
-        self.current_row  = 10 - int(move[1]) #move[1] is a number 1-8
-        self.current_col  = self.board[10].index(move[0]) #move[0] is a letter A-H
-        self.current_position = [self.current_row, self.current_col]
+        translated_row  = 10 - int(move[1])             #move[1] is a number 1-8
+        translated_col  = self.board[10].index(move[0]) #move[0] is a letter A-H
+        return [translated_row, translated_col]
         
         
 
@@ -123,7 +134,5 @@ class Round:
         """
         Moves the knight to a new position
         """
-        self.current_position = new_position
-        self.previous_positions.append(new_position)
-
-
+        self.current_position = self.translate_move_for_matrix(new_position)
+        self.previous_positions.append(self.current_position)

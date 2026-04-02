@@ -1,9 +1,4 @@
-#from Round_File import Round
-
-
-
-#E4 = Round([6,6])
-#E4.print_board()
+from Round_File import Round
 
 def menu(): 
     """ 
@@ -53,10 +48,14 @@ def get_int_input(prompt_string):
             print("Enter an integer")    
         
     
+def get_starting_position():
+    """
+    Gets starting position as an input from user, with error handling
+    :return: string of starting postion ("E4", )
+    """
 def start_player_round():
     """
-    Creates object of the Round class. First it gets starting postion from user 
-    then it creates the round
+    Creates object of the Round class. 
     """
 
     
@@ -69,143 +68,20 @@ def execute(choice):
     :param choice: an int corresponding the the chosen option 
     :return: (nothing) 
     """ 
-class Round:
-    """
-    Attributes:
-
-    allowed_positions:   A list of coordinates, where the knight is allowed to move, the first one is 
-                         up to the left from the knight. The symbols will be a-h.
-    previous_positions:   A sorted list of coordinates, where the first coordinate is the first   
-                        move, the second is the second move... The symbols on the board will   
-                        be 1, 2, 3, 4..
-    board_matrix:        12x12 grid representing the board
-    current_position:    current coordinate of the knight
-    """
-
-    def __init__(self, start_position):
-        """
-        Creates a new Round with current_position as starting position
-        """
-        self.current_position = start_position
-        self.allowed_positions = []
-        self.previous_positions = [start_position]
-        
-        self.current_row = 0
-        self.current_col = 0
-        self.board = [
-                            [-1,  -1, -1, -1, -1, -1, -1, -1  -1, -1,   -1,-1],#0
-                            [-1,  -1, -1, -1, -1, -1, -1, -1  -1, -1,   -1,-1],#1
-    
-                            [-1,   8,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#2
-                            [-1,   7,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#3
-                            [-1,   6,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#4
-                            [-1,   5,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#5
-                            [-1,   4,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#6
-                            [-1,   3,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#7
-                            [-1,   2,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#8
-                            [-1,   1,  0,  0,  0,  0,  0,  0,  0,  0,   -1,-1],#9
-                                
-                            [-1,  -1, 'A','B','C','D','E','F','G','H',  -1,-1],#10
-
-                            [-1,  -1, -1, -1, -1, -1, -1, -1, -1, -1,   -1,-1],#11
-                            # 0    1   2   3   4   5   6   7   8   9    10 11
-                            ]
-        
-        """
-        OBS
-        self.board[row][col] will get the element on that row and col of the matrix,
-        not the playable board
-        
-        The playable board will be accessed by the following logic:
-        
-        position = A1
-        "1" means row = 9 and "A" means col = 2
-        
-        position = A1
-        row = 10 - int(postion[1]) 
-        col = self.board[10].index(postion[0])
-        
-        self.board[row][col]
-        """
-        
-
-#row[col] blir värdet på den positionen, 0 eller X eller b, eller 2
-#
-
-    def print_board(self):
-        """
-        Prints the board row by row
-        """
-        previous_index = 0
-        allowed_index = 2
-        print("-"*40)
-        for id_row, row in enumerate(self.board): #Cycles through each row
-            if id_row >= 2 and id_row <= 10:
-                print("|   "  + ("-"*32) + "   |")
-                
-                if id_row != 10:
-                    print("|" + str(row[1]), end=" ")
-                else:
-                    print("|  ", end="")
-                
-                for col in range(2,10): #Cycles through each square in one row
-                    print(" | ", end="")
-
-                    if [id_row, col] == self.current_position:
-                        print("X", end="") #Print the knight                        
-
-                    elif [id_row, col] in self.previous_positions:
-                        print(self.previous_positions[previous_index], end="")
-                        previous_index += 1
-
-                    elif [id_row, col] in self.allowed_positions:
-                        print(str((self.board[10][allowed_index]())).lower(), end="")
-                        allowed_index += 1  
-                    
-                    elif id_row == 10:
-                        print(row[col], end="")
-                        
-                    else:
-                        print(" ", end="")
-                print("|")
-        print("-"*40)
-                    
-                    
-                                                            
-
-                            
-    def get_move(self):
-        """
-        Ask user for move and return chosen coordinate
-        """
-        move = input("Choose your move: ")
-        return move
-    
-    def update_curent_position(self, move):
-        """
-        Translates a move (A1 or G4...) to row index and column index and 
-        """
-        
-        self.current_row  = 10 - int(move[1]) #move[1] is a number 1-8
-        self.current_col  = self.board[10].index(move[0]) #move[0] is a letter A-H
-        self.current_position = [self.current_row, self.current_col]
-        
-        
-
-    def calculate_allowed_moves(self):
-        """
-        Calculates allowed moves and updates list
-        """
-        
-        pass
-
-    def make_move(self, new_position):
-        """
-        Moves the knight to a new position
-        """
-        self.current_position = new_position
-        self.previous_positions.append(new_position)
 
 
-E4 = Round([6,6])
-E4.print_board()
+rounds_dict = {}
+
+starting_pos = "E4"
+rounds_dict[starting_pos]= Round(starting_pos)
+starting_pos = "D2"
+rounds_dict[starting_pos]= Round(starting_pos)
+
+
+rounds_dict["D2"].print_board()
+
+rounds_dict["D2"].make_move("F1")
+rounds_dict["D2"].print_board()
+
+rounds_dict["D2"].make_move("G3")
+rounds_dict["D2"].print_board()
