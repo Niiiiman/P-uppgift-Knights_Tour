@@ -53,10 +53,25 @@ def get_starting_position():
     Gets starting position as an input from user, with error handling
     :return: string of starting postion ("E4", )
     """
-def start_player_round():
+    while True:
+        try:
+            starting_position = input("Enter your starting position - A1 to H8")
+            if starting_position[0] in ['A','B','C','D','E','F','G','H'] and int(starting_position[1]) >= 1 and  int(starting_position[1]) <= 8:
+
+                return starting_position
+            else:
+                raise ValueError 
+            
+        except ValueError:
+            print("Use the correct format for a position - A1, E4, H8 or similar")
+    
+
+def start_player_round(starting_position):
     """
     Creates object of the Round class. 
     """
+    
+
 
     
     
@@ -72,10 +87,10 @@ def execute(choice):
 
 rounds_dict = {}
 
-#starting_pos = "E4"
-#rounds_dict[starting_pos]= Round(starting_pos)
-starting_pos = "D2"
-rounds_dict[starting_pos]= Round(starting_pos)
+#starting_position= "E4"
+#rounds_dict[starting_position= Round(starting_position)
+starting_position= "D2"
+rounds_dict[starting_position] = Round(starting_position)
 
 
 rounds_dict["D2"].print_board()
@@ -86,5 +101,8 @@ rounds_dict["D2"].print_board()
 rounds_dict["D2"].make_move("G3")
 rounds_dict["D2"].print_board()
 
-rounds_dict["D2"].make_move("H8")
+rounds_dict["D2"].make_move("E4")
 rounds_dict["D2"].print_board()
+
+#rounds_dict["D2"].make_move("")
+#rounds_dict["D2"].print_board()

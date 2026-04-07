@@ -68,9 +68,12 @@ class Round:
         """
         
         allowed_list_index = 2
+        previous_keys_list_index = 0
+
         print("Come on champ! Next move:")
         print("PREV: " + str(self.previous_positions))
         print("CURR: " + str(self.current_position))
+
         print("-"*40)
         for id_row, row in enumerate(self.board): #Cycles through each row
 
@@ -89,8 +92,12 @@ class Round:
                         print("X", end="") #Print the knight                        
 
                     elif [id_row, col] in self.previous_positions.values():
-                        print(self.previous_dict_key, end="") #Prints the history of where the knight has been
-                                                               #This will look ugly after 9.
+                        for key, value in self.previous_positions.items():
+                            if value == [id_row, col]:
+                                print(key, end="")  
+                                break
+                                        #Prints the history of where the knight has been
+                                        #This will look ugly after 9.
 
                     elif [id_row, col] in self.allowed_positions:
                         print(str((self.board[10][allowed_list_index]())).lower(), end="") #str.board[10] points at the list ['A', 'B', ...]
@@ -107,13 +114,7 @@ class Round:
                     
                                                             
 
-                            
-    def get_move(self):
-        """
-        Ask user for move and return chosen coordinate
-        """
-        move = input("Choose your move: ")
-        return move
+            
     
     def translate_move_for_matrix(self, move):
         """
@@ -139,5 +140,5 @@ class Round:
         Moves the knight to a new position
         """
         self.current_position = self.translate_move_for_matrix(new_position)
-        self.previous_positions[self.previous_dict_key] = self.current_position
         self.previous_dict_key += 1
+        self.previous_positions[self.previous_dict_key] = self.current_position
