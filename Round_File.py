@@ -69,6 +69,7 @@ class Round:
         
         allowed_list_index = 2
         previous_keys_list_index = 0
+        self.calculate_allowed_moves()
 
         print("Come on champ! Next move:")
         print("PREV: " + str(self.previous_positions))
@@ -94,13 +95,16 @@ class Round:
                     elif [id_row, col] in self.previous_positions.values():
                         for key, value in self.previous_positions.items():
                             if value == [id_row, col]:
-                                print(key, end="")  
+                                if int(key) < 10:
+                                    print(key, end="")  
+                                else:
+                                    print("\b" + key, end="")
                                 break
                                         #Prints the history of where the knight has been
                                         #This will look ugly after 9.
 
                     elif [id_row, col] in self.allowed_positions:
-                        print(str((self.board[10][allowed_list_index]())).lower(), end="") #str.board[10] points at the list ['A', 'B', ...]
+                        print(str(self.board[10][allowed_list_index].lower()), end="") #str.board[10] points at the list ['A', 'B', ...]
                         allowed_list_index += 1                                            #And allowed positions will be marked by 'a','b', ...
                         #allowed_index starts at 2 because that points at A in row 10 of the matrix.
                     elif id_row == 10:
@@ -131,7 +135,18 @@ class Round:
     def calculate_allowed_moves(self):
         """
         Calculates allowed moves and updates list
+        Example: curr: E4 (6,6) 
+        allowed: [[4,5], [4,7], 
+                  [5,4], [5,8],
+                [row, col]
         """
+        x = self.current_position[1]
+        y = self.current_position[0]
+        self.allowed_positions = [[(y-2), (x-1)], [(y-2), (x+1)], 
+                                  [(y-1), (x-2)], [(y-1), (x+2)],
+                                  [(y+1), (x-2)], [(y+1), (x+2)],
+                                  [(y+2), (x-1)], [(y+2), (x+1)],]
+        
         
         pass
 
