@@ -1,6 +1,6 @@
 from Round_File import Round
 
-def menu(): 
+def main_menu(): 
     """ 
     Used to display the menu: 
     What would you like to do? 
@@ -17,9 +17,9 @@ def menu():
     print("4 - Exit")
     
     
-def execute(choice): 
+def execute_main_menu(choice): 
     """ 
-    Used to execute the option that the user chose 
+    Used to execute the option that the user chose from the main menu
     :param choice: an int corresponding the the chosen option 
     :return: (nothing) 
     """ 
@@ -69,18 +69,18 @@ def get_int_input(prompt_string):
             print("Enter an integer")    
         
     
-def get_starting_position():
+def get_position_input():
     """
-    Gets starting position as an input from user, with error handling
-    :return: string of starting postion ("E4", )
+    Gets position as an input from user, with error handling
+    :return: string of postion ("E4", )
     
     """
     while True:
         try:
-            starting_position = input("Enter your starting position - A1 to H8")
-            if starting_position[0] in ['A','B','C','D','E','F','G','H'] and int(starting_position[1]) >= 1 and  int(starting_position[1]) <= 8:
+            position = input("Enter your starting position - A1 to H8")
+            if position[0] in ['A','B','C','D','E','F','G','H'] and int(position[1]) >= 1 and  int(position[1]) <= 8:
 
-                return starting_position
+                return position
             else:
                 raise ValueError 
             
@@ -88,41 +88,39 @@ def get_starting_position():
             print("Use the correct format for a position - A1, E4, H8 or similar")
     
 
+
 def start_player_round(starting_position):
+    """)
+    Creates object of the Round class and adds it to the dictionary. This function is the main-game-function
     """
-    Creates object of the Round class. 
-    """
+    rounds_dict[starting_position] = Round(starting_position)
+    #playing = True
+    #while playing:
+    
+    pass    
     
 
-
-def start_auto_round(starting_position):
-    """
-    
-    """
-    
-    
-     
+def main():
  
+    #starting_position= "E4"
+    #rounds_dict[starting_position= Round(starting_position)
+    starting_position= "D2"
+    rounds_dict[starting_position] = Round(starting_position)
 
+
+    rounds_dict["D2"].print_board()
+
+    rounds_dict["D2"].make_move("F1")
+    rounds_dict["D2"].print_board()
+
+    rounds_dict["D2"].make_move("G3")
+    rounds_dict["D2"].print_board()
+
+    rounds_dict["D2"].make_move("E4")
+    rounds_dict["D2"].print_board()
+
+    #rounds_dict["D2"].make_move("")
+    #rounds_dict["D2"].print_board()
 
 rounds_dict = {}
-
-#starting_position= "E4"
-#rounds_dict[starting_position= Round(starting_position)
-starting_position= "D2"
-rounds_dict[starting_position] = Round(starting_position)
-
-
-rounds_dict["D2"].print_board()
-
-rounds_dict["D2"].make_move("F1")
-rounds_dict["D2"].print_board()
-
-rounds_dict["D2"].make_move("G3")
-rounds_dict["D2"].print_board()
-
-rounds_dict["D2"].make_move("E4")
-rounds_dict["D2"].print_board()
-
-#rounds_dict["D2"].make_move("")
-#rounds_dict["D2"].print_board()
+main()

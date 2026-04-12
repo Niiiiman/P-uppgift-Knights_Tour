@@ -71,9 +71,12 @@ class Round:
         previous_keys_list_index = 0
         self.calculate_allowed_moves()
 
-        print("Come on champ! Next move:")
-        print("PREV: " + str(self.previous_positions))
-        print("CURR: " + str(self.current_position))
+        print("Come on champ!")
+        print("Enter the coordinates of your next move: (Format E4, A1, H8...)")
+        print("Allowed moves are marked with a - h ")
+
+        #print("PREV: " + str(self.previous_positions))
+        #print("CURR: " + str(self.current_position))
 
         print("-"*40)
         for id_row, row in enumerate(self.board): #Cycles through each row

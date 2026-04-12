@@ -1,0 +1,5 @@
+Jennifer Jämn ; 20 ; 1.0
+Oliver Ojämn ; 19 ; 2.0
+Karolina Kaos ; 18 ; 4.0
+Kim Kanon ; 17 ; 3.0
+Ove Olycka; 4 ; 2.3

@@ -1,0 +1,107 @@
+Spjutkastare
+==========
+
+Beskrivning av vad programmet ska göra (algoritm) 
+-------------
+
+Spjutkastning: Simulera spjutkastare i tävlingar och samla statistik på deras resultat.
+
+En spjutkastare kan modelleras med två tal:    
+M: medellängden för ett kast  
+S: standard-avvikelsen för ett kast
+
+Varje enskild kast är ett slumptal med dessa parametrar random.normalvariate(M, S).
+
+Spjutkastarna ska definieras i en fil, du ska själv bestämma ett format på filen.
+Varje spjutkastare ska beskrivas med namn samt värdena på M och S.
+
+Varje tävling består av sex kast. Segraren är den som hade det längsta kastet i en tävling.
+
+När programmet körs ska användaren kunna skriva in  namnet på en fil med spjutkastare, och ett antal tävlingar 
+att simulera. När tävlingarna kör ska programmet skriva ut varje segrare och dennes seger-längd.
+Efter tävlingarna är klara ska programmet skriva ut antalet segrar för varje spjutkastare, sorterade 
+på antalet segrar: bäst först.
+
+Ingen speciell algoritm används. Ett antal kast simuleras och det bästa sparas 
+(först för varje kastare, och sedan för att se vem som vunnit tävlingen).
+Sedan räknas resultat ihop för att se hur många tävlingar som vunnits.
+
+
+Beskrivning av de datastrukturer som används (t.ex. listor, dictionaries):
+-------------
+
+**Filformat för spjutkastarna**
+
+rader med innehåll separerade av ";" 
+varje rad innehåller:
+Namn ; M ; S
+
+
+
+
+Beskrivning av minst en klass, med attribut och metoder
+-------------
+Spjutkastare
+
+Attribut
+namn: string -- namnet på kastaren
+m: float -- medelvärdet för kastaren
+s: float -- standardavvikelsen för kastaren
+
+Metoder
+   __init__: används för att sätta objektsvariabler.
+        :param namn: string
+        :param m: float -- medelvärdet för kastaren
+        :param s: float -- standardavvikelsen för kastaren
+   kast används för att kasta en gång.
+        :return: float -- normalfördelat kastresultat.        
+   __str__: namnet på kastaren
+        :return: string -- namnet på kastaren.
+   __lt__: Jämförelse (less than).  Behövs för att sortera resultat.
+        :param other: objekt att jämföra med
+        :return: bool -- self<other
+   läs_in_från_sekvens: Läs in en fil, tolka ut innehållet och skapa Spjutkastare.
+    :param sekvens: sekvens-objekt (iterable med strängar räcker, alltså både fil och lista med strängar)
+    :return: lista av spjutkastare        
+
+Uppdelning av programmet i funktioner
+-------------
+
+def main():
+    """
+    Själva spelets huvudfunktion.
+    """
+
+Kod-skiss:
+
+```
+input(“Var finns spjutkastarna?”)
+spjutkastarna = läs_in_fil(f)
+antal = input(“Hur många tävlingar?”)
+for i in range(antal):
+  resultat = kör_tävling(spjutkastarna)
+  print
+skriv_ut_statistik(statistik)
+```
+
+def läs_in_från_sekvens(sekvens):
+    """
+    Läs in data från en sekvens, tolka ut innehållet och skapa Spjutkastare.
+    :param sekvens: sekvens-objekt (iterable med strängar räcker, alltså både fil och lista med strängar)
+    :return: lista av spjutkastare
+    """
+    
+def kör_tävling(kastare):
+    """
+    Simulera en tävling med 6 kast per kastare. Returnera det bästa resultatet med motsvarande kastare.
+    :param kastare: list[Spjutkastare] -- deltagarna i tävlingen.
+    :return: (Spjutkastare, float) -- vinnaren och vinnande resultat.
+    """
+
+def skriv_ut_statistik(statistik):
+    """
+    Skriver ut resultatet av en sekvens av tävlingar.
+    :param statistik: dictionary {Spjutkastare : antal vinster}
+    """
+
+
