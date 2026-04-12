@@ -52,8 +52,7 @@ def print_statistics():
     """ 
     Prints the 1000 games played, with the most amount of moves at top. 
     :return: nothing 
-    """
-    
+    """  
 
 def get_int_input(prompt_string): 
     """ 
