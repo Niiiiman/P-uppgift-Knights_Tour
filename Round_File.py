@@ -71,9 +71,11 @@ class Round:
         previous_keys_list_index = 0
         self.calculate_allowed_moves()
 
+        print("-"*200)
         print("Come on champ!")
         print("Enter the coordinates of your next move: (Format E4, A1, H8...)")
         print("Allowed moves are marked with a - h ")
+       
 
         #print("PREV: " + str(self.previous_positions))
         #print("CURR: " + str(self.current_position))
@@ -101,7 +103,7 @@ class Round:
                                 if int(key) < 10:
                                     print(key, end="")  
                                 else:
-                                    print("\b" + key, end="")
+                                    print("\b" + str(key), end="")
                                 break
                                         #Prints the history of where the knight has been
                                         #This will look ugly after 9.
@@ -149,14 +151,21 @@ class Round:
                                   [(y-1), (x-2)], [(y-1), (x+2)],
                                   [(y+1), (x-2)], [(y+1), (x+2)],
                                   [(y+2), (x-1)], [(y+2), (x+1)],]
-        
-        
-        pass
+    
+    #def make_move_random():
+
 
     def make_move(self, new_position):
         """
         Moves the knight to a new position
         """
-        self.current_position = self.translate_move_for_matrix(new_position)
-        self.previous_dict_key += 1
-        self.previous_positions[self.previous_dict_key] = self.current_position
+        matrix_new_pos = self.translate_move_for_matrix(new_position)
+
+        if matrix_new_pos not in self.previous_positions.values() and matrix_new_pos in self.allowed_positions:
+
+            self.current_position = matrix_new_pos
+            self.previous_dict_key += 1
+            self.previous_positions[self.previous_dict_key] = self.current_position
+        else:
+            print("-"*200)
+            print("That is not an allowed position. Choose a square marked with a-h")
