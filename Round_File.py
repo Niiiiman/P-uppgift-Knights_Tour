@@ -1,3 +1,5 @@
+import random
+LETTERS = ['A','B','C','D','E','F','G','H']
 class Round:
     """
     Attributes:
@@ -11,7 +13,7 @@ class Round:
     current_position:    current coordinate of the knight
     """
 
-    def __init__(self, start_position):
+    def __init__(self, start_position = "A1", empty = False):
         """
         Creates a new Round with current_position as starting position
         """
@@ -33,7 +35,7 @@ class Round:
                             [-1,  -1, -1, -1, -1, -1, -1, -1, -1, -1,   -1,-1],#11
                             # 0    1   2   3   4   5   6   7   8   9    10 11
                             ]
-        
+        self.empty = empty
         self.current_position = self.translate_move_for_matrix(start_position)
         self.allowed_positions = []
         self.previous_positions = {}
@@ -67,14 +69,11 @@ class Round:
         Prints the board row by row
         """
         
-        allowed_list_index = 2
-        previous_keys_list_index = 0
+        allowed_list_index = 0
         self.calculate_allowed_moves()
 
-        print("-"*200)
+        print("-"*100)
         print("Come on champ!")
-        print("Enter the coordinates of your next move: (Format E4, A1, H8...)")
-        print("Allowed moves are marked with a - h ")
        
 
         #print("PREV: " + str(self.previous_positions))
@@ -94,7 +93,13 @@ class Round:
                 for col in range(2,10): #Cycles through each square in one row
                     print(" | ", end="")
 
-                    if [id_row, col] == self.current_position:
+                    if id_row == 10:
+                        print(row[col], end="")
+
+                    elif self.empty == True:
+                        print(" ", end="")
+
+                    elif [id_row, col] == self.current_position:
                         print("X", end="") #Print the knight                        
 
                     elif [id_row, col] in self.previous_positions.values():
@@ -108,13 +113,11 @@ class Round:
                                         #Prints the history of where the knight has been
                                         #This will look ugly after 9.
 
-                    elif [id_row, col] in self.allowed_positions:
-                        print(str(self.board[10][allowed_list_index].lower()), end="") #str.board[10] points at the list ['A', 'B', ...]
-                        allowed_list_index += 1                                            #And allowed positions will be marked by 'a','b', ...
-                        #allowed_index starts at 2 because that points at A in row 10 of the matrix.
-                    elif id_row == 10:
-                        print(row[col], end="")
                         
+                    elif [id_row, col] in self.allowed_positions:
+                        print(LETTERS[allowed_list_index].lower(), end="") 
+                        allowed_list_index += 1                                            #And allowed positions will be marked by 'a','b', ...
+                       
                     else:
                         print(" ", end="")
                 print(" |  |")
@@ -155,17 +158,35 @@ class Round:
     #def make_move_random():
 
 
-    def make_move(self, new_position):
+    def make_move(self, new_position, auto):
         """
         Moves the knight to a new position
         """
-        matrix_new_pos = self.translate_move_for_matrix(new_position)
+        
+          
+        if auto:
+            valid_moves = [
+            move for move in self.allowed_positions
+            if self.board[move[0]][move[1]] == 0
+            and move not in self.previous_positions.values()
+            ]
 
-        if matrix_new_pos not in self.previous_positions.values() and matrix_new_pos in self.allowed_positions:
+            if not valid_moves:
+                return False
+
+            matrix_new_pos = random.choice(valid_moves)
+
+            
+        else:
+            matrix_new_pos = self.translate_move_for_matrix(new_position)
+
+        if self.board[matrix_new_pos[0]][matrix_new_pos[1]] == 0 and matrix_new_pos in self.allowed_positions and matrix_new_pos not in self.previous_positions.values():
+        #matrix_new_pos not in self.previous_positions.values() and matrix_new_pos in self.allowed_positions and matrix_new_pos[0] >= 2 and matrix_new_pos[1] >= 2 and matrix_new_pos[0] <= 9 and matrix_new_pos[1] <= 9:
 
             self.current_position = matrix_new_pos
             self.previous_dict_key += 1
             self.previous_positions[self.previous_dict_key] = self.current_position
         else:
-            print("-"*200)
+            print("-"*100)
             print("That is not an allowed position. Choose a square marked with a-h")
+        return True
